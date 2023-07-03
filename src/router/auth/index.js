@@ -5,4 +5,4 @@ import * as Controllers from "../../controllers/index.js";
 export const auth = Router();
 
 auth.post(Path.auth.signup, Controllers.Auth.signup);
-auth.post(Path.auth.sigin, Controllers.Auth.sigin);
+auth.post(Path.auth.signin, Controllers.Auth.signin);

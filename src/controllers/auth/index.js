@@ -29,14 +29,12 @@ export const signup = async ({ body }, res, next) => {
     const hashPassword = await hash(password, 10);
     await User.model.create({ email, password: hashPassword });
 
-    res.status(400).json({ message: "Utilisateur crée." });
+    res.status(200).json({ message: "Utilisateur crée." });
   } catch (error) {
     if (error instanceof MongooseError)
-      res
-        .status(500)
-        .json({
-          message: "Impossible de créer l'utilisateur dans la base de données.",
-        });
+      res.status(500).json({
+        message: "Impossible de créer l'utilisateur dans la base de données.",
+      });
     else if (error instanceof Error)
       res.status(500).json({ message: error.message });
   }
@@ -48,7 +46,7 @@ export const signup = async ({ body }, res, next) => {
  * @param {response} res
  * @param {()=>void} next
  */
-export const sigin = async ({ body }, res, next) => {
+export const signin = async ({ body }, res, next) => {
   try {
     const { email, password } = body;
 
@@ -77,12 +75,9 @@ export const sigin = async ({ body }, res, next) => {
     res.status(201).json({ userId: user._id, token });
   } catch (error) {
     if (error instanceof MongooseError)
-      res
-        .status(500)
-        .json({
-          message:
-            "Impossible d'accéder a l'utilisateur dans la base de donnée",
-        });
+      res.status(500).json({
+        message: "Impossible d'accéder a l'utilisateur dans la base de donnée",
+      });
     else if (error instanceof jwt.JsonWebTokenError)
       return res
         .status(500)
